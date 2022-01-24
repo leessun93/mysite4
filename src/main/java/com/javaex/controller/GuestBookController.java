@@ -1,28 +1,33 @@
 package com.javaex.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.javaex.dao.GuestbookDao;
 import com.javaex.vo.GuestbookVo;
 
 @Controller
 @RequestMapping("/guestbook")
 public class GuestBookController {
 	
+	@Autowired
+	private GuestbookDao guestbookDao;
 	
 	//리스트 출력
 	@RequestMapping(value="/List", method={RequestMethod.GET, RequestMethod.POST})
-	public String addList(@ModelAttribute GuestbookVo guestbookVo) {
+	public String addList(Model model) {
 		
 		System.out.println("리스트 페이지 도킹");
-		List<GuestbookVo> guestbookList = new ArrayList<GuestbookVo>();
+		List<GuestbookVo> gbList = guestbookDao.getList();
+		
+		model.addAttribute("gbList", gbList);
 		
 		return "/WEB-INF/views/guestbook/addList.jsp";
 	}
@@ -41,7 +46,7 @@ public class GuestBookController {
 	
 	//딜리트폼
 	@RequestMapping("/deleteForm")
-	public String deleteForm() {
+	public String deleteForm(@ModelAttribute GuestbookVo guestbookVo) {
 		
 		System.out.println("딜리트폼 가즈아앗");
 		
@@ -50,8 +55,12 @@ public class GuestBookController {
 	}
 	
 	@RequestMapping("/delete")
-	public String delete() {
-		System.out.println("삭제 완료다 되삤따");
+	public String delete(@RequestParam("no") int no,
+						 @RequestParam("password") String password) {
+		System.out.println("삭제 완료다 돼삤따");
+		GuestbookVo gVo = new GuestbookVo(no, password);
+		guestbookDao.delete(gVo);
+		
 		
 		return "/WEB-INF/views/guestbook/addList.jsp";
 	}
