@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<!-- ResultMap -->
+	<resultMap id="ReMapBoardVo" type="BoardVo">
+		<result column="no" property="no" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="hit" property="hit" />
+		<result column="reg_date" property="regDate" />
+		<result column="user_no" property="userNo" />
+			  	<!-- 실제DB컬럼명 -->   <!-- 생성자명 -->
+	</resultMap>
+
+	<select id="selectone" parameterType="int" resultMap="ReMapBoardVo">
+		<![CDATA[
+			select  bo.no,
+			        title,
+			        content,
+			        us.name,
+			        to_char(reg_date, 'yyyy-mm-dd') reg_date,
+			        user_no,
+			        hit
+			from board bo, users us
+			where bo.user_no = us.no
+			and bo.no = ${no}
+		]]>
+	
+	</select>
+ 
+		<select id="selectList" resultMap="ReMapBoardVo">
+		<![CDATA[
+			SELECT 	b.no,
+					title,
+					content,
+					hit,
+					to_char(reg_date, 'yyyy-mm-dd') reg_date,
+					user_no,
+					u.name
+			FROM 	board b, users u
+			WHERE	b.user_no = u.no
+			ORDER BY b.no desc
+		]]>
+	</select>
+	
+	<update id="updatehit" parameterType="int">
+		<![CDATA[
+			UPDATE 	board
+			SET		hit = NVL(hit,0) + 1
+			WHERE 	no = #{no}
+		]]>
+	</update>
+	
+</mapper>

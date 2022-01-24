@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="/${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
-<link href="/${pageContext.request.contextPath}/assets/css/user.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/user.css" rel="stylesheet" type="text/css">
 
 
 </head>
@@ -47,7 +47,7 @@
 	
 				<div id="user">
 					<div id="loginForm">
-						<form action="/mysite4/user/login" method="get">
+						<form action="${pageContext.request.contextPath}/user/login" method="get">
 	
 							<!-- 아이디 -->
 							<div class="form-group">

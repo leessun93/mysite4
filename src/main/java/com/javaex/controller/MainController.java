@@ -11,6 +11,6 @@ public class MainController {
 	public String main() {
 		System.out.println("메인콘츄롤러 도킹");
 	
-		return "/WEB-INF/views/main/index.jsp";
+		return "main/index";
 	}
 }

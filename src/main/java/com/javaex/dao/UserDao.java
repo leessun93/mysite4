@@ -9,12 +9,11 @@ import com.javaex.vo.UserVo;
 @Repository
 public class UserDao {
 	@Autowired
-	private SqlSession sqlSession;
+	private SqlSession sqlSession; //세션 영역 사용하겠다 선언
 	//유저정보 가져오기 (로그인시 사용)
-	public UserVo getUser(UserVo userVo) {
-		System.out.println("다오의 겟유저");
-		System.out.println(userVo);
-		UserVo authUser = sqlSession.selectOne("user.getUser", userVo);
+	public UserVo selectUser(UserVo userVo) {
+		
+		UserVo authUser = sqlSession.selectOne("user.selectUser", userVo);
 		return authUser;
 	}
 	

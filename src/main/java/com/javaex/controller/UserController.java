@@ -1,38 +1,63 @@
 package com.javaex.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.javaex.dao.UserDao;
+import com.javaex.service.UserService;
 import com.javaex.vo.UserVo;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
-	private UserDao userDao;
+	private UserService userService;
 	
 	//로그인 폼
-	@RequestMapping(value="/user/loginForm", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping("/loginForm")
 	public String loginForm() {
 		System.out.println("유저 콘츄롤러 로그인폼 도킹");
-		
-		return "/WEB-INF/views/user/loginForm.jsp";
+		return "user/loginForm";
 	}
 	
 	
-	//로그인
-	@RequestMapping(value="/user/login", method= {RequestMethod.GET, RequestMethod.POST})
-	public String login(@ModelAttribute UserVo userVo) {
-		System.out.println("로그인 도킹");
 	
-		UserVo authUser = userDao.getUser(userVo);
+	//로그인
+	@RequestMapping("/login")
+	public String login(@ModelAttribute UserVo userVo, HttpSession session) {
+		System.out.println("콘츄롤러 로그인 도킹");
+	
+		UserVo authUser = userService.login(userVo);
 		
-		return "/WEB-INF/views/main/index.jsp";
+		if(authUser != null) {//로긴성공
+			//세션에저장
+			System.out.println("로긴성공");
+			session.setAttribute("authUser", authUser);
+			
+			return "redirect:/main";
+		}else {
+			
+			return "redirect:loginForm?result=fail";
+		}
 		
 		
+	}
+	
+	
+	
+	
+	//로그아웃
+	@RequestMapping("/logout")
+	public String logout(HttpSession session){
+		
+		session.removeAttribute("authUser");
+		session.invalidate();
+		
+		return "redirect:loginForm";
 	}
 }

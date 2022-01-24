@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.javaex.dao.GuestbookDao;
+import com.javaex.service.GuestService;
 import com.javaex.vo.GuestbookVo;
 
 @Controller
@@ -18,10 +18,10 @@ import com.javaex.vo.GuestbookVo;
 public class GuestBookController {
 	
 	@Autowired
-	private GuestbookDao guestbookDao;
+	private GuestService guestService;
 	
 	//리스트 출력
-	@RequestMapping(value="/List", method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping("/List")
 	public String addList(Model model) {
 		
 		System.out.println("리스트 페이지 도킹");
@@ -29,7 +29,7 @@ public class GuestBookController {
 		
 		model.addAttribute("gbList", gbList);
 		
-		return "/WEB-INF/views/guestbook/addList.jsp";
+		return "/guestbook/addList.jsp";
 	}
 	//에드
 	@RequestMapping("/add")
