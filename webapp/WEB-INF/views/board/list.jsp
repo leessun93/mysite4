@@ -63,13 +63,13 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach item="${boardList}" var="vo">
+								<c:forEach items="${bList}" var="vo">
 									<tr>
-										<td>123</td>
-										<td class="text-left"><a href="#">게시판 게시글입니다.</a></td>
-										<td>정우성</td>
-										<td>1232</td>
-										<td>2020-12-23</td>
+										<td>${vo.no}</td>
+										<td class="text-left"><a href="${pageContext.request.contextPath}/board/read?no=${vo.no}">${vo.title}</a></td>
+										<td>${vo.name}</td>
+										<td>${vo.hit}</td>
+										<td>${vo.regDate}</td>
 										<c:choose>
 											<c:when test="${authUser.no eq vo.userNo}">
 											<td><a href="${pageContext.request.contextPath}/board/delete?no=${vo.no}">[삭제]</a></td>

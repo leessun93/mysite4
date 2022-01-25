@@ -17,4 +17,17 @@ public class BoardDao {
 		return boardList;
 	}
 
+	public BoardVo getoneList(int no) {
+		System.out.println("여긴 다오의 겟리스트");
+		BoardVo boardList = sqlSession.selectOne("board.selectone", no);
+		return boardList;
+	}
+	public void uphit(int no) {
+		System.out.println("여긴 다오의 업힛");
+		sqlSession.update("board.updatehit", no);
+	}
+	public void modify(BoardVo boardVo) {
+		System.out.println("다오의 모디");
+		sqlSession.insert("board.modify", boardVo);
+	}
 }
