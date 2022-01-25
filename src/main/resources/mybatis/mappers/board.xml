@@ -63,5 +63,20 @@
 		
 		]]>
 	</update>
+	
+	<delete id="delete" parameterType="int">
+		<![CDATA[
+		 delete board
+		 where no = #{no}
+		]]>
+	</delete>
 
+	<insert id="write" parameterType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			insert into board
+			values (SEQ_BOARD_NO.nextval, #{title}, #{content},0, sysdate, #{userNo})	
+		]]>
+	
+	
+	</insert>
 </mapper>

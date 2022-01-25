@@ -8,9 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVo;
+import com.javaex.vo.UserVo;
 
 @Controller
 @RequestMapping("/board")
@@ -57,15 +59,31 @@ public class BoardController {
 	}
 	//롸이트폼 포워드
 	@RequestMapping("/writeForm")
-	public String writeForm() {
+	public String writeForm(@SessionAttribute(value="authUser", required=false) UserVo authVo) {
 		System.out.println("롸이트폼 도킹");
-		return "board/writeForm";
+		
+		
+		if(authVo != null) {
+			return "board/writeForm";
+		}
+		else { // 잘못된 접근 처리
+			return "redirect:/main";
+		}
 	}
 	//롸이트
 	@RequestMapping("/write")
-	public String write(){
-		System.out.println("롸이트 완료");
-		return "redirect:list";
+	public String write(@SessionAttribute(value="authUser", required=false) UserVo authVo,
+						@ModelAttribute BoardVo boardVo){
+		System.out.println("롸이트 도킹");
+		boardService.write(boardVo, authVo);
+		return "redirect:List";
+	}
+	//딜리트
+	@RequestMapping("/delete")
+	public String delete(@RequestParam("no") int no) {
+		System.out.println("딜리트");
+		boardService.delete(no);
+		return "redirect:List";
 	}
 	
 }

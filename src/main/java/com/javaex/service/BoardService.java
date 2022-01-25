@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.javaex.dao.BoardDao;
 import com.javaex.vo.BoardVo;
+import com.javaex.vo.UserVo;
 
 @Service
 public class BoardService {
@@ -36,5 +37,15 @@ public class BoardService {
 	public void modify(BoardVo boardVo) {
 		System.out.println("서비스영역 모디 했다");
 		boardDao.modify(boardVo);
+	}
+	public void delete(int no) {
+		System.out.println("다오의 딜리트 영역");
+		boardDao.delete(no);
+	}
+	public void write(BoardVo boardVo, UserVo authVo) {
+		System.out.println("서비스의 롸이트");
+		int no = authVo.getNo();
+		boardVo.setUserNo(no);
+		boardDao.write(boardVo);
 	}
 }

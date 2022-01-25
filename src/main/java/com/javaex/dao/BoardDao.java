@@ -30,4 +30,12 @@ public class BoardDao {
 		System.out.println("다오의 모디");
 		sqlSession.insert("board.modify", boardVo);
 	}
+	public void delete(int no) {
+		sqlSession.delete("board.delete", no);
+	}
+	public void write(BoardVo boardVo) {
+		System.out.println("다오으 롸이트");
+		sqlSession.insert("board.write", boardVo);
+		System.out.println(boardVo);
+	}
 }
