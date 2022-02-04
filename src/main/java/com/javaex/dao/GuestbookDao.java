@@ -41,6 +41,7 @@ public class GuestbookDao {
 	public int insertSelectKey(GuestbookVo guestbookVo){
 		System.out.println("guestbookDao/insertSelectKey");
 		
+		System.out.println("완료해따");
 		return sqlSession.insert("guestbook.insertSelectKey", guestbookVo);	
 	}
 	

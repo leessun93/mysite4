@@ -28,7 +28,7 @@ public class ApiGuestbookController {
 	
 	
 	@ResponseBody//제이슨으로 보내준다는 선언이고 이게 바디 아래의 ajax (뻥션)에서 받는다	
-	@RequestMapping("/List")
+	@RequestMapping("/list")
 	public List<GuestbookVo> List() {
 		System.out.println("ApiguestbookController/List()");
 		List<GuestbookVo> guestbookList = guestbookService.getGuestList();
@@ -71,5 +71,6 @@ public class ApiGuestbookController {
 		System.out.println(result);
 		return result;
 	}
+	
 	
 }
