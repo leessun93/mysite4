@@ -25,7 +25,7 @@ public class GuestBookController {
 	public String addList(Model model) {
 		
 		System.out.println("리스트 페이지 도킹");
-		List<GuestbookVo> gbList = guestbookDao.getList();
+		List<GuestbookVo> gbList = guestService.getGuestList();
 		
 		model.addAttribute("gbList", gbList);
 		
@@ -59,7 +59,7 @@ public class GuestBookController {
 						 @RequestParam("password") String password) {
 		System.out.println("삭제 완료다 돼삤따");
 		GuestbookVo gVo = new GuestbookVo(no, password);
-		guestbookDao.delete(gVo);
+		guestService.remove(gVo);
 		
 		
 		return "/WEB-INF/views/guestbook/addList.jsp";
