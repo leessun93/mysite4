@@ -63,7 +63,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${bList}" var="vo">
+								<c:forEach items="${pMap.boardList}" var="vo">
 									<tr>
 										<td>${vo.no}</td>
 										<td class="text-left"><a href="${pageContext.request.contextPath}/board/read?no=${vo.no}">${vo.title}</a></td>
@@ -82,18 +82,17 @@
 			
 						<div id="paging">
 							<ul>
-								<li><a href="">◀</a></li>
-								<li><a href="">1</a></li>
-								<li><a href="">2</a></li>
-								<li><a href="">3</a></li>
-								<li><a href="">4</a></li>
-								<li class="active"><a href="">5</a></li>
-								<li><a href="">6</a></li>
-								<li><a href="">7</a></li>
-								<li><a href="">8</a></li>
-								<li><a href="">9</a></li>
-								<li><a href="">10</a></li>
-								<li><a href="">▶</a></li>
+								<c:if test='${requestScope.pMap.prev == true} '>
+									<li><a href="${pageContext.request.contextPath}/board/list2?crtPage=page${pMap.startPageBtnNo-1}">◀</a></li>
+								</c:if>
+								<!--현재 페이지를 볼드처리  -->
+								<c:forEach begin="${pMap.startPageBtnNo} }" end="#{pMap.endPageBtnNo}" step="1" var="page">
+									<li class="active"><a href="${pageContext.request.contextPath}/board/list2?crtPage=page${pMap.endPageBtnNo+1}">${page}</a></li>
+								</c:forEach>
+								
+								<c:if test='${requestScope.pMap.next == true} '>
+									<li><a href="">▶</a></li>
+								</c:if>
 							</ul>
 							
 							
